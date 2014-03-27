@@ -1,0 +1,33 @@
+description 'This is a sample gradle script that uses this plugin'
+
+buildscript {
+    repositories {
+        flatDir {
+            dirs 'build/libs'
+        }
+    }
+
+    dependencies {
+        classpath 'com.github.skazzyy.gradle.plugins:sources-gradle-plugin:LATEST'
+    }
+}
+
+apply plugin: 'sources'
+
+defaultTasks 'assemble'
+
+sourceSets {
+    main {
+        java {
+            include 'nothing'
+        }
+    }
+
+    test {
+        java {
+            include 'nothing'
+        }
+    }
+}
+
+archivesBaseName = "sample-${project.name}"

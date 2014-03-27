@@ -13,3 +13,16 @@ dependencies {
 
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
+
+task testSample(type: GradleBuild) {
+    dependsOn assemble
+    buildFile = 'sample.build.gradle'
+    doLast {
+        assert file("build/libs/sample-sources-gradle-plugin.jar").exists()
+        assert file("build/libs/sample-sources-gradle-plugin-sources.jar").exists()
+        assert file("build/libs/sample-sources-gradle-plugin-javadoc.jar").exists()
+        assert file("build/libs/sample-sources-gradle-plugin-tests.jar").exists()
+    }
+}
+
+check.dependsOn testSample

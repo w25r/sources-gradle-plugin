@@ -14,6 +14,8 @@ public class SourcesPluginTest {
     @Test
     public void shouldApplyPlugin() {
         DefaultProject project = (DefaultProject) ProjectBuilder.builder().withProjectDir(new File("build/tmp/" + getClass().getSimpleName())).build();
-        project.getPlugins().apply(SourcesPlugin.class);
+        project.getPlugins().apply("sources");
     }
+
+
 }
