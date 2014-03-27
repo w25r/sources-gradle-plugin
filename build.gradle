@@ -1,0 +1,15 @@
+apply plugin: 'groovy'
+
+defaultTasks 'clean', 'build'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
