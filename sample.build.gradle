@@ -19,13 +19,13 @@ defaultTasks 'assemble'
 sourceSets {
     main {
         java {
-            include 'nothing'
+            exclude '**/*'
         }
     }
 
     test {
         java {
-            include 'nothing'
+            exclude '**/*'
         }
     }
 }
