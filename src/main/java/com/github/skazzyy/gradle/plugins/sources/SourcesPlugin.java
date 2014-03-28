@@ -13,6 +13,8 @@ import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.javadoc.Javadoc;
 
 /**
+ * Simple plugin that creates artifact tasks for sources, javadoc, and tests and adds them to the default archives configuration.
+ *
  * Created by w25r on 3/27/14.
  */
 public class SourcesPlugin implements Plugin<Project> {
@@ -60,4 +62,5 @@ public class SourcesPlugin implements Plugin<Project> {
         project.getArtifacts().add(Dependency.ARCHIVES_CONFIGURATION, javadocJar);
         project.getArtifacts().add(Dependency.ARCHIVES_CONFIGURATION, testsJar);
     }
+
 }

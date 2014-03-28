@@ -6,5 +6,6 @@ build
 
 # Package Files #
 *.jar
+!gradle-wrapper.jar #Except for gradle-wrapper.jar
 *.war
 *.ear

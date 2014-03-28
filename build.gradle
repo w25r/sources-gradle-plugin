@@ -1,6 +1,8 @@
 apply plugin: 'groovy'
+apply plugin: 'signing'
+apply plugin: 'jacoco'
 
-defaultTasks 'clean', 'build'
+defaultTasks 'clean', 'build', 'jacoco', 'sampleCodeCoverageReport'
 
 repositories {
     mavenCentral()
@@ -11,18 +13,45 @@ dependencies {
     compile localGroovy()
 }
 
+group = 'com.github.skazzyy.gradle.plugins'
+version = '0.1.0'
+
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'
 
-task testSample(type: GradleBuild) {
+jacoco {
+    //this new version is Java 8 compatible
+    toolVersion = "0.7.0.201403182114"
+}
+
+task testSampleJava(type: JavaExec) {
+    description 'Validates the sample.build.gradle as a JavaExec task for code coverage generation'
+    classpath file('gradle\\wrapper\\gradle-wrapper.jar')
+    main 'org.gradle.wrapper.GradleWrapperMain'
     dependsOn assemble
-    buildFile = 'sample.build.gradle'
+    args '-b'
+    args 'sample.build.gradle'
+
     doLast {
+        //this is a 'test' afterall
         assert file("build/libs/sample-sources-gradle-plugin.jar").exists()
         assert file("build/libs/sample-sources-gradle-plugin-sources.jar").exists()
         assert file("build/libs/sample-sources-gradle-plugin-javadoc.jar").exists()
         assert file("build/libs/sample-sources-gradle-plugin-tests.jar").exists()
     }
 }
+check.dependsOn testSampleJava
 
-check.dependsOn testSample
+jacoco {
+    applyTo testSampleJava
+}
+
+task sampleCodeCoverageReport(type:JacocoReport){
+    executionData testSampleJava
+    sourceSets sourceSets.main
+}
+
+signing {
+    required false
+    sign configurations.archives
+}
