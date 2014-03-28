@@ -26,7 +26,7 @@ jacoco {
 
 task testSampleJava(type: JavaExec) {
     description 'Validates the sample.build.gradle as a JavaExec task for code coverage generation'
-    classpath file('gradle\\wrapper\\gradle-wrapper.jar')
+    classpath file('gradle/wrapper/gradle-wrapper.jar')
     main 'org.gradle.wrapper.GradleWrapperMain'
     dependsOn assemble
     args '-b'
