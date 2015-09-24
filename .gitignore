@@ -1,11 +1,15 @@
-.gradle
-.idea
-build
-*.iml
-*.class
+#Gradle
+.gradle/
+build/
 
-# Package Files #
-*.jar
-!gradle-wrapper.jar #Except for gradle-wrapper.jar
-*.war
-*.ear
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# Intellij
+.idea/
+*.iml
+*.iws
