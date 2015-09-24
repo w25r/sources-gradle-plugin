@@ -15,10 +15,7 @@ repositories {
 }
 
 group = 'com.github.skazzyy.gradle.plugins'
-version = '0.1.0'
-
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'
+version = '1.0.0-SNAPSHOT'
 
 task testSampleJava(type: JavaExec) {
     description 'Validates the sample.build.gradle as a JavaExec task for code coverage generation'
