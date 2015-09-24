@@ -1,11 +1,8 @@
-//apply plugin: 'groovy'
-//apply plugin: 'signing'
-//apply plugin: 'jacoco'
-//apply plugin: 'eclipse'
 plugins {
     id 'java-gradle-plugin'
     id 'eclipse'
     id 'jacoco'
+    id 'com.gradle.plugin-publish' version "0.9.1"
 }
 
 defaultTasks 'clean', 'build', 'jacoco', 'sampleCodeCoverageReport'
@@ -47,7 +44,15 @@ task sampleCodeCoverageReport(type:JacocoReport){
     sourceSets sourceSets.main
 }
 
-//signing {
-//    required false
-//    sign configurations.archives
-//}
+pluginBundle {
+    website = 'https://github.com/skazzyy/sources-gradle-plugin'
+    vcsUrl = 'https://github.com/skazzyy/sources-gradle-plugin'
+    description = 'Simple plugin for publishing sources and javadoc in java projects'
+    tags = ['java', 'source']
+    plugins {
+        sourcesPlugin {
+            id = 'com.github.skazzyy.sources'
+            displayName = 'Java Sources Gradle Plugin'
+        }
+    }
+}
