@@ -39,12 +39,12 @@ public class SourcesPlugin implements Plugin<Project> {
             jar.setClassifier("javadoc");
             Javadoc javadoc = (Javadoc) project.getTasks().getByName(JavaPlugin.JAVADOC_TASK_NAME);
             jar.from(javadoc.getDestinationDir());
+            jar.dependsOn(javadoc);
         });
 
         Task testsJar = project.getTasks().create("testsJar", Jar.class, jar -> {
             jar.setDescription("Creates a jar containing all the source and classes for the tests");
             jar.setClassifier("tests");
-
             SourceSet test = javaPluginConvention.getSourceSets().getByName("test");
             jar.from(test.getAllJava());
             jar.from(test.getOutput());

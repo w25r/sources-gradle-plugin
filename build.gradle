@@ -27,10 +27,13 @@ task testSampleJava(type: JavaExec) {
 
     doLast {
         //this is a 'test' afterall
-        assert file("build/libs/sample-sources-gradle-plugin.jar").exists()
-        assert file("build/libs/sample-sources-gradle-plugin-sources.jar").exists()
-        assert file("build/libs/sample-sources-gradle-plugin-javadoc.jar").exists()
-        assert file("build/libs/sample-sources-gradle-plugin-tests.jar").exists()
+        ['', '-sources', '-javadoc', '-tests'].each { classifier ->
+            def file = file("build/libs/sample-sources-gradle-plugin${ -> classifier }.jar")
+            logger.info "Checking that $file was created and is not empty"
+            assert file.exists()
+            //If the jars is full, then it should be at least 1000 bytes
+            assert file.length() > 1000
+        }
     }
 }
 check.dependsOn testSampleJava
