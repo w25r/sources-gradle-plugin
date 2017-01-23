@@ -1,4 +1,4 @@
-central-publish-gradle-plugin
+sources-gradle-plugin
 =============================
 
-An open source gradle plugin for the boiler plate code that is publish source, doc, and tests jars
+An open source gradle plugin for the boiler plate code that adds source, doc, and test jars to the publication.
