@@ -12,6 +12,7 @@ buildscript {
     }
 }
 
+apply plugin: 'java'
 apply plugin: 'sources'
 
 defaultTasks 'assemble'
@@ -19,13 +20,15 @@ defaultTasks 'assemble'
 sourceSets {
     main {
         java {
-            exclude '**/*'
+            srcDir 'src/test/java'
+            include '**/Sample.java'
         }
     }
 
     test {
         java {
-            exclude '**/*'
+            srcDir 'src/test/java'
+            include '**/SampleTest.java'
         }
     }
 }

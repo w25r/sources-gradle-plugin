@@ -1,28 +1,18 @@
-apply plugin: 'groovy'
-apply plugin: 'signing'
-apply plugin: 'jacoco'
+plugins {
+    id 'java-gradle-plugin'
+    id 'eclipse'
+    id 'jacoco'
+    id 'com.gradle.plugin-publish' version "0.9.1"
+}
 
 defaultTasks 'clean', 'build', 'jacoco', 'sampleCodeCoverageReport'
 
 repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile gradleApi()
-    compile localGroovy()
+    jcenter()
 }
 
 group = 'com.github.skazzyy.gradle.plugins'
-version = '0.1.0'
-
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'
-
-jacoco {
-    //this new version is Java 8 compatible
-    toolVersion = "0.7.0.201403182114"
-}
+version = '1.0.0-SNAPSHOT'
 
 task testSampleJava(type: JavaExec) {
     description 'Validates the sample.build.gradle as a JavaExec task for code coverage generation'
@@ -34,10 +24,13 @@ task testSampleJava(type: JavaExec) {
 
     doLast {
         //this is a 'test' afterall
-        assert file("build/libs/sample-sources-gradle-plugin.jar").exists()
-        assert file("build/libs/sample-sources-gradle-plugin-sources.jar").exists()
-        assert file("build/libs/sample-sources-gradle-plugin-javadoc.jar").exists()
-        assert file("build/libs/sample-sources-gradle-plugin-tests.jar").exists()
+        ['', '-sources', '-javadoc', '-tests'].each { classifier ->
+            def file = file("build/libs/sample-sources-gradle-plugin${ -> classifier }.jar")
+            logger.info "Checking that $file was created and is not empty"
+            assert file.exists()
+            //If the jars is full, then it should be at least 1000 bytes
+            assert file.length() > 1000
+        }
     }
 }
 check.dependsOn testSampleJava
@@ -51,7 +44,15 @@ task sampleCodeCoverageReport(type:JacocoReport){
     sourceSets sourceSets.main
 }
 
-signing {
-    required false
-    sign configurations.archives
+pluginBundle {
+    website = 'https://github.com/skazzyy/sources-gradle-plugin'
+    vcsUrl = 'https://github.com/skazzyy/sources-gradle-plugin'
+    description = 'Simple plugin for publishing sources and javadoc in java projects'
+    tags = ['java', 'source']
+    plugins {
+        sourcesPlugin {
+            id = 'com.github.skazzyy.sources'
+            displayName = 'Java Sources Gradle Plugin'
+        }
+    }
 }
